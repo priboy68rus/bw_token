@@ -16,20 +16,23 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 main {
   flex: 1;
   display: grid;
-  grid-template-columns: auto 320px;
+  grid-template-columns: auto 380px;
   gap: 24px;
   padding: 24px;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 .card-stage {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   background: #1a1a1a;
   border-radius: 16px;
   padding: 16px;
@@ -53,6 +56,8 @@ main {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
 }
 
 h1 {
