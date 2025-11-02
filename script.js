@@ -19,7 +19,6 @@ let cardName;
 let cardType;
 let rulesText;
 let ptText;
-let currentAlignment = "left";
 
 const FONT_CHOICES = {
   cinzel: "'Cinzel', serif",
@@ -67,9 +66,12 @@ let nameFontSize = 45;
 let typeFontSize = 33;
 let rulesFontSize = 30;
 let ptFontSize = 45;
+let nameAlignment = "left";
+let typeAlignment = "left";
+let rulesAlignment = "left";
 const RULES_BOTTOM = 1000;
 const TYPE_GAP_WITH_RULES = 16;
-const TYPE_GAP_WITHOUT_RULES = 75;
+const TYPE_GAP_WITHOUT_RULES = 100;
 const RULES_TEXT_OFFSET = 24;
 const PT_TOP_POSITION = 952;
 
@@ -279,21 +281,19 @@ const syncArtworkToWindow = () => {
   artworkImage.setCoords();
 };
 
-const applyTextAlignment = (alignment, shouldRender = true) => {
-  currentAlignment = alignment;
-
+const applyTextAlignments = (shouldRender = true) => {
   if (cardName) {
-    cardName.set({ textAlign: alignment });
+    cardName.set({ textAlign: nameAlignment });
     cardName.setCoords();
   }
 
   if (cardType) {
-    cardType.set({ textAlign: alignment });
+    cardType.set({ textAlign: typeAlignment });
     cardType.setCoords();
   }
 
   if (rulesText) {
-    rulesText.set({ textAlign: alignment });
+    rulesText.set({ textAlign: rulesAlignment });
     rulesText.setCoords();
   }
 
@@ -376,6 +376,8 @@ const applyFontStyles = (shouldRender = true) => {
     alignPTText();
   }
 
+  applyTextAlignments(false);
+
   if (shouldRender) {
     focusTextLayers();
     canvas.requestRenderAll();
@@ -450,7 +452,7 @@ const applyCanvasLayout = (showRules) => {
     alignPTText();
   }
 
-  applyTextAlignment(currentAlignment, false);
+  applyTextAlignments(false);
   syncArtworkToWindow();
   focusTextLayers();
   canvas.requestRenderAll();
@@ -486,7 +488,7 @@ const initCard = async () => {
     fontWeight: BASE_WEIGHTS.name,
     fontStyle: isItalic ? "italic" : "normal",
     editable: true,
-    textAlign: currentAlignment,
+    textAlign: nameAlignment,
   });
 
   cardType = new fabric.Textbox("Creature - Spirit", {
@@ -499,7 +501,7 @@ const initCard = async () => {
     fontWeight: BASE_WEIGHTS.type,
     fontStyle: isItalic ? "italic" : "normal",
     editable: true,
-    textAlign: currentAlignment,
+    textAlign: typeAlignment,
   });
 
   rulesText = new fabric.Textbox("Flying\nLifelink", {
@@ -513,7 +515,7 @@ const initCard = async () => {
     fontWeight: BASE_WEIGHTS.rules,
     fontStyle: isItalic ? "italic" : "normal",
     editable: true,
-    textAlign: currentAlignment,
+    textAlign: rulesAlignment,
   });
 
   ptText = new fabric.Textbox("1/1", {
@@ -533,7 +535,7 @@ const initCard = async () => {
 
   canvas.add(cardName, cardType, rulesText, ptText);
   applyCanvasLayout(true);
-  applyTextAlignment(currentAlignment, false);
+  applyTextAlignments(false);
   applyFontStyles(false);
   focusTextLayers();
   canvas.renderAll();
@@ -611,7 +613,9 @@ const toughnessInput = document.getElementById("toughness-input");
 const rulesToggle = document.getElementById("rules-toggle");
 const rulesField = document.getElementById("rules-field");
 const rulesHeightInput = document.getElementById("rules-height-input");
-const alignmentSelect = document.getElementById("alignment-select");
+const nameAlignmentSelect = document.getElementById("name-alignment-select");
+const typeAlignmentSelect = document.getElementById("type-alignment-select");
+const rulesAlignmentSelect = document.getElementById("rules-alignment-select");
 const ptToggle = document.getElementById("pt-toggle");
 const fontSelect = document.getElementById("font-select");
 const boldToggle = document.getElementById("bold-toggle");
@@ -699,10 +703,27 @@ if (rulesToggle) {
   });
 }
 
-if (alignmentSelect) {
-  alignmentSelect.value = currentAlignment;
-  alignmentSelect.addEventListener("change", (event) => {
-    applyTextAlignment(event.target.value || "left");
+if (nameAlignmentSelect) {
+  nameAlignmentSelect.value = nameAlignment;
+  nameAlignmentSelect.addEventListener("change", (event) => {
+    nameAlignment = event.target.value || "left";
+    applyTextAlignments();
+  });
+}
+
+if (typeAlignmentSelect) {
+  typeAlignmentSelect.value = typeAlignment;
+  typeAlignmentSelect.addEventListener("change", (event) => {
+    typeAlignment = event.target.value || "left";
+    applyTextAlignments();
+  });
+}
+
+if (rulesAlignmentSelect) {
+  rulesAlignmentSelect.value = rulesAlignment;
+  rulesAlignmentSelect.addEventListener("change", (event) => {
+    rulesAlignment = event.target.value || "left";
+    applyTextAlignments();
   });
 }
 

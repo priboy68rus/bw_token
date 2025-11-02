@@ -1,6 +1,6 @@
 :root {
   color-scheme: only dark;
-  font-family: "Cardo", "Times New Roman", serif;
+  font-family: "Beleren", "Beleren Small Caps", "Cardo", "Times New Roman", serif;
   background: #111;
   color: #eee;
 }
@@ -116,7 +116,7 @@ input,
 textarea,
 select,
 button {
-  font-family: "Cardo", "Times New Roman", serif;
+  font-family: "Beleren", "Beleren Small Caps", "Cardo", "Times New Roman", serif;
   border-radius: 8px;
   border: 1px solid #2c2c2c;
   background: #111;
