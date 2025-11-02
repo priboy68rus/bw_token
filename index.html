@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="icon.png" />
+    <title>B&W MTG Token Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=IM+Fell+English:ital@0;1&family=Kalam:wght@300;400;700&family=Shadows+Into+Light&family=Nanum+Pen+Script&family=Covered+By+Your+Grace&family=Just+Another+Hand&family=Single+Day&family=Indie+Flower&family=Gochi+Hand&family=Homemade+Apple&family=Patrick+Hand+SC&family=MedievalSharp&family=Jim+Nightshade&family=Eagle+Lake&family=Uncial+Antiqua&family=Metamorphous&family=Inknut+Antiqua:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/fabric@5.3.0/dist/fabric.min.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="card-stage">
+        <canvas id="card-canvas" width="744" height="1039"></canvas>
+      </section>
+
+      <section class="control-panel">
+        <h1>Black &amp; White Token Maker</h1>
+
+        <div class="field">
+          <label for="name-input">Card Name</label>
+          <input id="name-input" placeholder="Spirit Token" maxlength="48" />
+        </div>
+
+        <div class="field">
+          <label for="type-input">Type Line</label>
+          <input id="type-input" placeholder="Creature - Spirit" maxlength="64" />
+        </div>
+
+        <div class="field toggle">
+          <label class="toggle-label">
+            <input type="checkbox" id="rules-toggle" checked />
+            Show Rules Text
+          </label>
+        </div>
+
+        <div class="field" id="rules-field">
+          <label for="rule-input">Rules Text</label>
+          <textarea
+            id="rule-input"
+            rows="6"
+            placeholder="Flying&#10;Whenever..."
+            maxlength="520"
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label for="alignment-select">Text Alignment</label>
+          <select id="alignment-select">
+            <option value="left" selected>Left</option>
+            <option value="center">Center</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="font-select">Card Font</label>
+          <select id="font-select">
+            <option value="'Cinzel', serif">Cinzel</option>
+            <option value="'Beleren Small Caps', serif">Beleren Small Caps</option>
+            <option value="'Beleren', serif" selected>Beleren</option>
+            <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+            <option value="'IM Fell English', serif">IM Fell English</option>
+            <option value="'Kalam', cursive">Kalam</option>
+            <option value="'Shadows Into Light', cursive">Shadows Into Light</option>
+            <option value="'Nanum Pen Script', cursive">Nanum Pen Script</option>
+            <option value="'Covered By Your Grace', cursive">Covered By Your Grace</option>
+            <option value="'Just Another Hand', cursive">Just Another Hand</option>
+            <option value="'Single Day', cursive">Single Day</option>
+            <option value="'Indie Flower', cursive">Indie Flower</option>
+            <option value="'Gochi Hand', cursive">Gochi Hand</option>
+            <option value="'Homemade Apple', cursive">Homemade Apple</option>
+            <option value="'Patrick Hand SC', cursive">Patrick Hand SC</option>
+            <option value="'MedievalSharp', cursive">MedievalSharp</option>
+            <option value="'Jim Nightshade', cursive">Jim Nightshade</option>
+            <option value="'Eagle Lake', cursive">Eagle Lake</option>
+            <option value="'Uncial Antiqua', cursive">Uncial Antiqua</option>
+            <option value="'Metamorphous', serif">Metamorphous</option>
+            <option value="'Inknut Antiqua', serif">Inknut Antiqua</option>
+          </select>
+        </div>
+
+        <div class="field toggle">
+          <label class="toggle-label">
+            <input type="checkbox" id="bold-toggle" />
+            Bold Text
+          </label>
+        </div>
+
+        <div class="field toggle">
+          <label class="toggle-label">
+            <input type="checkbox" id="italic-toggle" />
+            Italic Text
+          </label>
+        </div>
+
+        <div class="field">
+          <label for="name-font-size">Name Font Size</label>
+          <input id="name-font-size" type="number" min="12" max="96" value="40" />
+        </div>
+
+        <div class="field">
+          <label for="type-font-size">Type Font Size</label>
+          <input id="type-font-size" type="number" min="10" max="80" value="28" />
+        </div>
+
+        <div class="field">
+          <label for="rules-font-size">Rules Font Size</label>
+          <input id="rules-font-size" type="number" min="10" max="60" value="26" />
+        </div>
+
+        <div class="field">
+          <label for="pt-font-size">Power/Toughness Font Size</label>
+          <input id="pt-font-size" type="number" min="12" max="80" value="40" />
+        </div>
+
+        <div class="field grouped">
+          <label for="power-input">Power</label>
+          <input id="power-input" class="pt" placeholder="1" maxlength="2" />
+          <label for="toughness-input">Toughness</label>
+          <input id="toughness-input" class="pt" placeholder="1" maxlength="2" />
+        </div>
+
+        <div class="field">
+          <label for="rules-height-input">Rules Box Height (px)</label>
+          <input id="rules-height-input" type="number" min="80" max="400" value="220" />
+        </div>
+
+        <div class="field toggle">
+          <label class="toggle-label">
+            <input type="checkbox" id="pt-toggle" checked />
+            Show Power/Toughness Box
+          </label>
+        </div>
+
+        <div class="field">
+          <label for="artwork-input">Artwork Upload</label>
+          <input id="artwork-input" type="file" accept="image/*" />
+          <div class="hint">
+            Drop an image or click to browse. Drag and resize once it appears.
+          </div>
+        </div>
+
+        <div class="field buttons">
+          <button id="center-art-btn" type="button">Center Artwork</button>
+          <button id="remove-art-btn" type="button">Remove Artwork</button>
+        </div>
+
+        <button id="download-btn" class="primary" type="button">
+          Download PNG
+        </button>
+      </section>
+    </main>
+
+    <footer>
+      Use the handles on the artwork to resize. Text boxes accept keyboard
+      editing directly on the card.
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
